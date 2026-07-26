@@ -49,9 +49,26 @@ silences it.
 ## 2. build_page.py — render the page
 
 ```bash
-python build_page.py --data ../substack_accounts.json --out ../index.html
+# the invocation that produces this site -- keep --home, or the page loses its
+# back link to the tools index the next time you rebuild
+python build_page.py --data ../substack_accounts.json --out ../index.html --home ../index.html
+
 python build_page.py -d data.json -o site/index.html --title "Health Substacks"
 ```
+
+| Flag | Default | Meaning |
+|---|---|---|
+| `-d, --data` | `substack_accounts.json` | Input JSON from scrape.py |
+| `-o, --out` | `index.html` | Output HTML path (relative to cwd) |
+| `--title` | derived from tags | `<title>` text |
+| `--heading` | same as `--title` | On-page `<h1>` |
+| `--home` | – | Adds a back link above the H1 |
+| `--home-label` | `All tools` | Text for that link |
+
+`--home` is an **href resolved against the output page**, not the cwd — a page at
+`substack-accounts/index.html` linking to the root `index.html` wants
+`../index.html`. Omit the flag and no link is emitted, which is what you want for
+a standalone page.
 
 Handles any number of tags, assigning each its own colour and filter chip from a
 10-colour palette. The dataset is embedded in the HTML, so the page works

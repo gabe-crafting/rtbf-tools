@@ -8,11 +8,12 @@ Any number of tags is supported; each gets its own colour and filter chip.
 
 Examples
 --------
-  python build_page.py --data ../substack_accounts.json --out ../index.html
+  python build_page.py --data ../substack_accounts.json --out ../index.html --home ../index.html
   python build_page.py -d data.json -o site/index.html --title "Health Substacks"
 """
 
 import argparse
+import html
 import io
 import json
 import os
@@ -109,11 +110,13 @@ __CHIP_CSS__
     .cacc.paid{color:#8a6300}
   }
   .legend{display:inline-block;margin-right:10px}
+  .home{display:inline-block;margin-bottom:14px;color:var(--muted);text-decoration:none;font-size:12.5px}
+  .home:hover{color:var(--accent2);text-decoration:underline}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>__HEADING__</h1>
+  __HOME__<h1>__HEADING__</h1>
   <p class="sub">__SUBTITLE__</p>
 
   <div class="controls">
@@ -287,6 +290,12 @@ def parse_args():
     ap.add_argument("-o", "--out", default="index.html", help="output HTML path")
     ap.add_argument("--title", default=None, help="page title (default: derived from tags)")
     ap.add_argument("--heading", default=None, help="on-page H1 (default: same as --title)")
+    ap.add_argument("--home", default=None,
+                    help="add a back link above the H1, pointing here. This is an href "
+                         "resolved against the *output page*, not the cwd -- so a page at "
+                         "tools/foo/index.html linking to tools/index.html wants '../index.html'")
+    ap.add_argument("--home-label", default="All tools",
+                    help="text for the --home link (default: All tools)")
     return ap.parse_args()
 
 
@@ -339,8 +348,12 @@ def main():
               "comments + restacks <em>within that window</em>, not all-time."
               % (max(pools) if pools else 0, with_posts, len(accounts)))
 
+    home = ('<a class="home" href="%s">&larr; %s</a>\n  '
+            % (html.escape(args.home, quote=True), html.escape(args.home_label))
+            if args.home else "")
+
     maxf = max((a.get("followers", 0) for a in accounts), default=1000) or 1000
-    html = (TEMPLATE
+    page = (TEMPLATE
             .replace("__CHIP_CSS__", "\n".join(chip_css))
             .replace("__CHIPS__", "".join(chips))
             .replace("__DATA__", json.dumps(accounts, ensure_ascii=False))
@@ -348,6 +361,7 @@ def main():
             .replace("__TITLE__", title)
             .replace("__HEADING__", heading)
             .replace("__SUBTITLE__", subtitle)
+            .replace("__HOME__", home)
             .replace("__FOOTER__", footer)
             .replace("__MAXF__", str(int(maxf)))
             .replace("__STEP__", str(max(100, int(maxf / 500) * 100))))
@@ -356,10 +370,10 @@ def main():
     if out_dir and not os.path.isdir(out_dir):
         os.makedirs(out_dir)
     with io.open(args.out, "w", encoding="utf-8") as f:
-        f.write(html)
+        f.write(page)
 
     eprint("Wrote %s (%.1f KB) -- %d accounts, %d tag(s): %s"
-           % (args.out, len(html) / 1024.0, len(accounts), len(tags), ", ".join(tags)))
+           % (args.out, len(page) / 1024.0, len(accounts), len(tags), ", ".join(tags)))
     return 0
 
 

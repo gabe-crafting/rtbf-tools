@@ -23,7 +23,7 @@ handles, not just these two. Python 3.7+, standard library only, no API key.
 ```bash
 cd scripts
 python scrape.py --tag beef --tag cardiology --out ../substack_accounts.json
-python build_page.py --data ../substack_accounts.json --out ../index.html
+python build_page.py --data ../substack_accounts.json --out ../index.html --home ../index.html
 ./deploy.sh
 ```
 
