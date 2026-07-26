@@ -3,7 +3,9 @@
 A searchable directory of large Substack accounts surfaced by searching Substack
 for **beef** and **cardiology**, with each account's most-recent and most-engaged posts.
 
-**Live page:** https://gabe-crafting.github.io/rtbf-tools/
+**Live page:** https://gabe-crafting.github.io/rtbf-tools/substack-accounts/
+
+One of the tools in [rtbf-tools](../README.md).
 
 ## Contents
 

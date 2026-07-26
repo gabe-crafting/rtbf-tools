@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RTBF Tools</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#181b22; --card2:#1f232c; --line:#2a2f3a;
+    --text:#e8eaed; --muted:#9aa3af; --accent:#ff7a45; --accent2:#4f9dff;
+  }
+  @media (prefers-color-scheme: light){
+    :root{--bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#e2e5ea;--text:#1a1d23;--muted:#606874;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:56px 20px 72px}
+  .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent);
+    font-weight:700;margin:0 0 8px}
+  h1{font-size:30px;margin:0 0 6px;letter-spacing:-.4px}
+  .sub{color:var(--muted);margin:0 0 40px;font-size:15px;max-width:62ch}
+
+  .grid{display:grid;gap:16px}
+  @media(min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+
+  .tool{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:20px;text-decoration:none;color:inherit;
+    transition:border-color .15s,transform .15s,background .15s}
+  .tool:hover{border-color:var(--accent2);background:var(--card2);transform:translateY(-2px)}
+  .tool:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+  .tool h2{font-size:17px;margin:0 0 6px;display:flex;align-items:center;gap:8px}
+  .tool h2 .arrow{color:var(--muted);font-size:14px;transition:transform .15s,color .15s}
+  .tool:hover h2 .arrow{color:var(--accent2);transform:translateX(3px)}
+  .tool p{margin:0 0 16px;color:var(--muted);font-size:13.5px;flex:1}
+
+  .stats{display:flex;flex-wrap:wrap;gap:6px}
+  .stat{font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;
+    background:var(--card2);border:1px solid var(--line);color:var(--muted);
+    font-variant-numeric:tabular-nums;white-space:nowrap}
+  @media (prefers-color-scheme: light){.stat{background:var(--bg)}}
+  .stat.beef{background:rgba(255,122,69,.14);border-color:rgba(255,122,69,.35);color:var(--accent)}
+  .stat.blue{background:rgba(79,157,255,.14);border-color:rgba(79,157,255,.35);color:var(--accent2)}
+  @media (prefers-color-scheme: light){
+    .stat.beef{color:#b4441a}
+    .stat.blue{color:#1b5fbe}
+  }
+
+  .foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:12.5px}
+  .foot a{color:var(--accent2);text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+  .foot p{margin:0 0 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Right to Bear Farms</p>
+  <h1>Tools</h1>
+  <p class="sub">Standalone research pages. Each one is a static site with its data
+    baked in &mdash; no server, no API keys. Pick a tool below.</p>
+
+  <div class="grid">
+
+    <a class="tool" href="substack-accounts/index.html">
+      <h2>Substack Accounts <span class="arrow" aria-hidden="true">&rarr;</span></h2>
+      <p>Searchable directory of large Substack accounts surfaced by the searches
+         <em>beef</em> and <em>cardiology</em>, with each account's most-recent and
+         most-engaged posts, follower counts, and per-post read/comment access.</p>
+      <div class="stats">
+        <span class="stat beef">39 accounts</span>
+        <span class="stat">2 keywords</span>
+        <span class="stat">Data 2026-07-26</span>
+      </div>
+    </a>
+
+    <a class="tool" href="romanian-western-companies/index.html">
+      <h2>Western-Linked Romanian SRLs <span class="arrow" aria-hidden="true">&rarr;</span></h2>
+      <p>Research shortlist of active Romanian SRLs with public evidence of Western
+         ownership or leadership. Filter by name, owner nationality, or headcount;
+         company and parent-company profiles render inline. Not legal due diligence.</p>
+      <div class="stats">
+        <span class="stat blue">43 companies</span>
+        <span class="stat">28 parents</span>
+        <span class="stat">Sources 2026-07-10</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="foot">
+    <p>Each tool folder holds its own data, page, and build scripts &mdash; see the
+       README inside it for how to regenerate.</p>
+    <p>Source: <a href="https://github.com/gabe-crafting/rtbf-tools">github.com/gabe-crafting/rtbf-tools</a></p>
+  </div>
+</div>
+</body>
+</html>
