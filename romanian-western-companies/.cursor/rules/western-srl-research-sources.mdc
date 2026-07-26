@@ -1,0 +1,82 @@
+---
+description: Where to search for Western-owned Romanian SRL shareholders and ownership evidence
+alwaysApply: true
+---
+
+# Western SRL research sources
+
+When the user asks to find more companies, verify ownership, or expand the directory, use this source priority.
+
+## Tier 1 — Romanian platforms with foreign-ownership filters (start here)
+
+- **Risco.ro** — strongest for bulk discovery; filter by shareholder country (UK, US, etc.), ownership %, turnover, active SRL; Excel export and API.
+- **ListaFirme.ro** / **listafirme.eu** — advanced filters for ownership share by nationality, foreign ownership, shareholder name search; good for bulk exports.
+- **Termene.ro** — associate/shareholder search, monitoring, API; less direct nationality filters but very comprehensive.
+
+Look for: Foreign Ownership, Shareholders, Advanced Search. Filter: active SRL, country, export when possible.
+
+## Tier 2 — Global depth and UBO chains
+
+- **Orbis (Bureau van Dijk / Moody’s)** — best for corporate trees, UBO, shareholder country of origin; paid/enterprise.
+- **Dun & Bradstreet** — secondary global ownership links.
+- **OpenCorporates** — free cross-check; incomplete for Romanian shareholder detail.
+
+## Tier 3 — Official verification (per company)
+
+- **ONRC** — portal.onrc.ro; search by name/CUI.
+- Order **Certificat Constatator** (~€10–15) for full shareholder list and percentages.
+- **Beneficial Owners (UBO) register** — citizenship sometimes available; may require legitimate interest.
+
+Use ONRC to verify candidates found via commercial platforms; not for bulk nationality filtering.
+
+## Tier 4 — Bulk / custom data
+
+- **Clientsolutions.io**, **Lista-firme-romania.ro**, Firme.info, Verifai — bulk lists, new registrations, custom exports (UK/US shareholders above threshold).
+
+## Tier 5 — APIs and automation
+
+- **Termene.ro API**, **Risco.ro API** — automate recurring discovery or integrate into this repo (`scripts/`, `data/`).
+
+## Tier 6 — Supplementary (discovery signals only)
+
+- **LinkedIn Sales Navigator** — owner/founder + UK/US location; not exhaustive.
+- **Press/news** — e.g. "British investor Romania SRL", "US owned company Romania".
+- **UK Companies House** — trace UK parent/holder of Romanian SRL shares.
+- **Romanian law firms / due diligence firms** — custom lists, paid.
+- **Data brokers** — custom foreign-owned company lists.
+
+## Default workflow
+
+1. Discover with Risco.ro + ListaFirme.ro (UK/British first, then US, then other Western countries).
+2. Deep-check complex structures with Orbis if available.
+3. Verify shortlisted SRLs via ONRC Certificat Constatator or registry snippets.
+4. Document in `companies/<slug>.md` using existing labels: Likely Western-owned / Western-led, ownership unclear / Verified Western-owned.
+5. For each company **and** any non-Romanian parent, also capture: **website**, **social media**, **short sourced history**.
+6. Parent companies get their own `parents/<slug>.md` (not indexed in search); link from Romanian SRL profile.
+7. Regenerate UI data: `node scripts/build-data.mjs`.
+
+## Parent pages and profile enrichment
+
+- **Romanian SRL profiles** live in `companies/` and appear in the filter UI.
+- **Parent / group profiles** live in `parents/` (UK Ltd, GmbH, Oy, etc.). Link from SRL profile; **never** add parents to search index.
+- When researching any entity, map:
+  - **What it does** — plain-language business activity (products, services, customers)
+  - Official website(s)
+  - Social media: LinkedIn, Facebook, Instagram, X (only verified URLs from site footer or official profiles)
+  - Short history (2–4 bullets, sourced; note uncertainty)
+- Apply the same fields to parent pages.
+- Standard SRL sections (after Identity): `## What it does`, then `## Size`, then `## Parent / group`, `## Online presence`, `## Short history`.
+- Online presence format: Website, LinkedIn, Facebook, Instagram, X — omit lines with no verified URL.
+
+## Project constraints (do not override)
+
+- State nationality only when explicitly sourced; do not infer from company name or branding alone.
+- Tag 1–10 employees as **Micro / low-profile** (neutral term).
+- BRCC membership and British branding are discovery signals, not proof of ownership.
+- Note stale filings and holding-company opacity in rationale.
+
+## Known limitations
+
+- Western owners often use non-resident holding companies; UBO data can be incomplete.
+- True exhaustiveness is unlikely without paid bulk exports or APIs.
+- Each platform has its own commercial/bulk terms.

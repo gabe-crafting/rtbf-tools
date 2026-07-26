@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Western-Linked Romanian SRLs</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">Pilot directory · 25 active SRLs</p>
+        <h1>Western-Linked Romanian SRLs</h1>
+        <p class="subtitle">Search by company name, owner nationality, or employee count. Profiles render as Markdown below.</p>
+      </div>
+      <div class="meta-pill">Sources accessed 2026-07-10</div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="search-panel" aria-label="Search and filters">
+      <label class="search-label" for="search-input">Search</label>
+      <div class="search-row">
+        <input
+          id="search-input"
+          type="search"
+          placeholder="e.g. Terra Carpatica, German, British, French…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button type="button" id="clear-search" class="btn-secondary" hidden>Clear</button>
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-label">Employees (filed headcount)</span>
+        <div class="range-row">
+          <label class="range-field">
+            <span>Min</span>
+            <input id="employees-min" type="number" min="0" step="1" placeholder="0" />
+          </label>
+          <span class="range-sep" aria-hidden="true">–</span>
+          <label class="range-field">
+            <span>Max</span>
+            <input id="employees-max" type="number" min="0" step="1" placeholder="Any" />
+          </label>
+        </div>
+        <div id="employee-presets" class="chip-group chip-group-compact" role="group" aria-label="Employee range presets"></div>
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-label">Nationality</span>
+        <div id="nationality-filters" class="chip-group" role="group" aria-label="Filter by nationality"></div>
+      </div>
+
+      <p id="result-count" class="result-count" aria-live="polite"></p>
+
+      <ul id="results-list" class="results-list" role="listbox" aria-label="Matching companies"></ul>
+    </section>
+
+    <section class="profile-panel" aria-label="Company profile">
+      <div id="profile-nav" class="profile-nav" hidden>
+        <button type="button" id="profile-back" class="btn-secondary">← Back</button>
+        <span id="profile-breadcrumb" class="profile-breadcrumb"></span>
+      </div>
+      <div id="profile-placeholder" class="profile-placeholder">
+        <p>Select a company or start typing to filter the list.</p>
+      </div>
+      <article id="profile-content" class="profile-content markdown-body" hidden></article>
+    </section>
+  </main>
+
+  <script src="js/companies-data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
