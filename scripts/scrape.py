@@ -63,16 +63,17 @@ def parse_args():
 
 def main():
     args = parse_args()
-    if not args.tag and not args.handle and args.no_search:
-        eprint("Nothing to do: pass --tag/--handle, or drop --no-search.")
-        return 1
-    if not args.tag and not args.handle:
-        eprint("Nothing to do: pass at least one --tag or --handle.")
+    if not args.tag and not args.handle and not args.refresh:
+        eprint("Nothing to do: pass at least one --tag or --handle, or use --refresh.")
         return 1
 
     existing = load_json(args.out, default={}) or {}
     accounts = {a["handle"]: a for a in existing.get("accounts", [])}
     eprint("Loaded %d existing account(s) from %s" % (len(accounts), args.out))
+
+    if args.refresh and not accounts:
+        eprint("--refresh needs an existing dataset; %s has no accounts." % args.out)
+        return 1
 
     # ---- 1. discover handles -> {handle: [tags]} -------------------------
     discovered = {}
@@ -83,6 +84,10 @@ def main():
                 discovered.setdefault(handle, []).append(tag)
     for handle in args.handle:
         discovered.setdefault(handle.lstrip("@"), []).append(args.handle_tag)
+    if args.refresh:
+        # Re-profile everyone already on file, keeping their existing tags.
+        for handle, acct in accounts.items():
+            discovered.setdefault(handle, list(acct.get("keywords", [])))
 
     eprint("Discovered %d unique handle(s)" % len(discovered))
 

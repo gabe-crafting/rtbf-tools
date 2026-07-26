@@ -170,6 +170,23 @@ def fetch_profile(handle):
 
 # ------------------------------------------------------------------- posts
 
+# Substack's `write_comment_permissions` -> our normalised vocabulary.
+# Verified empirically across ~220 posts; unknown values pass through raw so a
+# new Substack value degrades to a visible label instead of silently vanishing.
+COMMENT_ACCESS = {
+    "everyone": "everyone",      # anyone can comment
+    "subscribers": "subscribers",  # free + paid subscribers
+    "only_paid": "paid",         # paid subscribers only
+    "none": "none",              # comments closed
+}
+
+
+def normalise_comment_access(raw):
+    if not raw:
+        return "unknown"
+    return COMMENT_ACCESS.get(raw, str(raw))
+
+
 def fetch_posts(publication_url, want=60, page_size=12, sleep=0.15):
     """
     Newest-first posts for a publication. `page_size` must stay small — large
@@ -202,7 +219,13 @@ def fetch_posts(publication_url, want=60, page_size=12, sleep=0.15):
                 "comments": comments,
                 "restacks": restacks,
                 "engagement": reactions + comments + restacks,
+                # Who can READ the post.
                 "audience": p.get("audience"),
+                # Who can COMMENT. Independent of `audience` -- a free-to-read
+                # post can still restrict commenting to paid subscribers.
+                "comment_access": normalise_comment_access(
+                    p.get("write_comment_permissions")),
+                "comment_access_raw": p.get("write_comment_permissions"),
             })
 
         if len(batch) < page_size:      # reached the end of the archive

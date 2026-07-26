@@ -62,6 +62,12 @@ sorting by followers/subscribers/start-date/name (click a column header too), a
 minimum-followers slider, and a per-account accordion of most-recent and
 most-engaged posts.
 
+Every post carries two access markers, because Substack sets them separately:
+
+- 🔒 next to the title — the post is **paid-only to read**
+- a comment pill — **free** (anyone), **subs** (free or paid subscribers),
+  **paid** (paid subscribers only), or **off** (comments closed)
+
 ## 3. deploy.sh — publish
 
 ```bash
@@ -109,7 +115,19 @@ already on, waits for the build, and prints the live URL.
 ```
 
 Each post: `title`, `url`, `date`, `reactions`, `comments`, `restacks`,
-`engagement` (their sum), `audience` (`everyone` = free, anything else = paid).
+`engagement` (their sum), plus two independent access fields:
+
+| Field | Values | Meaning |
+|---|---|---|
+| `audience` | `everyone`, `only_paid`, … | who can **read** the post |
+| `comment_access` | `everyone`, `subscribers`, `paid`, `none` | who can **comment** |
+| `comment_access_raw` | Substack's original string | unnormalised, for auditing |
+
+**These two are independent** — in the current dataset 87 free-to-read posts
+allow only paid subscribers to comment, and 34 paid posts let anyone comment.
+`comment_access` is normalised from Substack's `write_comment_permissions`
+(`only_paid` → `paid`); unrecognised values pass through verbatim rather than
+being dropped, so a new Substack value shows up as a visible label.
 
 ## Endpoints used
 

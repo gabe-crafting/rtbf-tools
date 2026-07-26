@@ -96,6 +96,19 @@ __CHIP_CSS__
   .post .pmeta .g{margin-right:9px}
   .lock{opacity:.55;font-size:10px}
   .rank{display:inline-block;min-width:16px;color:var(--muted);font-weight:700;font-size:11px}
+  /* who may comment on a post -- independent of who may read it */
+  .cacc{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:5px;
+    text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+  .cacc.everyone{background:rgba(62,207,142,.15);color:#3ecf8e;border:1px solid rgba(62,207,142,.35)}
+  .cacc.subscribers{background:rgba(79,157,255,.15);color:#4f9dff;border:1px solid rgba(79,157,255,.35)}
+  .cacc.paid{background:rgba(245,197,66,.15);color:#f5c542;border:1px solid rgba(245,197,66,.35)}
+  .cacc.none,.cacc.unknown{background:rgba(154,163,175,.13);color:var(--muted);border:1px solid var(--line)}
+  @media (prefers-color-scheme: light){
+    .cacc.everyone{color:#0f7a4d}
+    .cacc.subscribers{color:#1b5fbe}
+    .cacc.paid{color:#8a6300}
+  }
+  .legend{display:inline-block;margin-right:10px}
 </style>
 </head>
 <body>
@@ -159,12 +172,28 @@ function dfmt(s){ if(!s) return "—"; const d=new Date(s); return isNaN(d)?"—
 function esc(s){ return (s||"").replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function kwSlug(k){ return (KWMAP[k]||{}).slug || "tag"; }
 
+// Who may COMMENT. Separate from who may READ (the padlock) -- a free-to-read
+// post can still be paid-only for commenting, and vice versa.
+const CACC = {
+  everyone:    {label:"free",  title:"Comments open to everyone"},
+  subscribers: {label:"subs",  title:"Only subscribers (free or paid) can comment"},
+  paid:        {label:"paid",  title:"Only paid subscribers can comment"},
+  none:        {label:"off",   title:"Comments are closed"},
+  unknown:     {label:"n/a",   title:"Comment access not reported"}
+};
+function caccBadge(p){
+  const key = p.comment_access || "unknown";
+  const meta = CACC[key] || {label:key, title:"Comment access: "+key};
+  const cls = key.replace(/[^a-z0-9]+/gi,'-').toLowerCase();
+  return `<span class="cacc ${cls}" title="${esc(meta.title)}">&#128172; ${esc(meta.label)}</span>`;
+}
+
 function postRow(p, rank){
-  const lock = (p.audience && p.audience!=="everyone") ? ' <span class="lock" title="paid only">&#128274;</span>' : '';
+  const lock = (p.audience && p.audience!=="everyone") ? ' <span class="lock" title="paid subscribers only can read">&#128274;</span>' : '';
   const r = rank!=null ? `<span class="rank">${rank}.</span> ` : '';
   return `<div class="post">
     <a href="${p.url}" target="_blank" rel="noopener">${r}${esc(p.title)}${lock}</a>
-    <div class="pmeta"><span class="g">${dfmt(p.date)}</span><span class="g">&#10084; ${fmt(p.reactions)}</span><span class="g">&#128172; ${fmt(p.comments)}</span><span class="g">&#9851; ${fmt(p.restacks)}</span></div>
+    <div class="pmeta"><span class="g">${dfmt(p.date)}</span><span class="g">&#10084; ${fmt(p.reactions)}</span><span class="g">&#128172; ${fmt(p.comments)}</span><span class="g">&#9851; ${fmt(p.restacks)}</span>${caccBadge(p)}</div>
   </div>`;
 }
 
@@ -294,13 +323,20 @@ def main():
                 % (coloured, data.get("generated", "n/a"), len(accounts)))
 
     pools = [a.get("post_pool", 0) for a in accounts if a.get("post_pool")]
-    footer = ("Followers &amp; subscribers come from each account's public Substack profile. "
+    legend = ('<b>Who can comment:</b> '
+              '<span class="legend"><span class="cacc everyone">&#128172; free</span> anyone</span>'
+              '<span class="legend"><span class="cacc subscribers">&#128172; subs</span> subscribers (free or paid)</span>'
+              '<span class="legend"><span class="cacc paid">&#128172; paid</span> paid subscribers only</span>'
+              '<span class="legend"><span class="cacc none">&#128172; off</span> closed</span>'
+              '<br>This is separate from who can <em>read</em> a post &mdash; '
+              '&#128274; marks a paid-only post, and a free post can still be paid-only for commenting.<br>')
+    footer = (legend +
+              "Followers &amp; subscribers come from each account's public Substack profile. "
               "&quot;Started&quot; is the date the account's publication was created "
               "(its first-post period). &quot;Keywords&quot; shows which search term surfaced "
               "the account. Posts are drawn from up to the %d most recent per account "
               "(%d of %d accounts have post data); &quot;most engaged&quot; = reactions + "
-              "comments + restacks <em>within that window</em>, not all-time. "
-              "&#128274; marks a paid-only post."
+              "comments + restacks <em>within that window</em>, not all-time."
               % (max(pools) if pools else 0, with_posts, len(accounts)))
 
     maxf = max((a.get("followers", 0) for a in accounts), default=1000) or 1000

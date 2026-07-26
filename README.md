@@ -29,6 +29,12 @@ See [scripts/README.md](scripts/README.md) for all options and caveats.
 
 ## About the data
 
+Each post shows two **separate** access markers, because Substack controls them
+independently: a padlock if the post is paid-only to *read*, and a pill showing
+who may *comment* (free / subscribers / paid / off). In this dataset 87
+free-to-read posts still restrict commenting to paid subscribers.
+
+
 Follower and subscriber counts come from each account's public Substack profile.
 "Started" is the date the account's publication was created - the closest public
 proxy for a first post. For each account, posts are drawn from up to its ~60 most
