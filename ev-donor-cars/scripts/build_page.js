@@ -23,5 +23,8 @@ if (!re.test(page)) {
   console.error("cars-data script block not found in index.html");
   process.exit(1);
 }
-fs.writeFileSync(pagePath, page.replace(re, `$1\n${json}\n$2`));
+// Replacer must be a function: the JSON itself can contain `$1`, `$2`, `$&`...
+// which String.replace would otherwise expand as capture-group references.
+fs.writeFileSync(pagePath,
+  page.replace(re, (m, open, close) => `${open}\n${json}\n${close}`));
 console.log(`embedded ${data.cars.length} cars (scraped ${data.scraped}) into index.html`);
