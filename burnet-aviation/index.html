@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aviation Companies - Burnet, TX</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#181b22; --card2:#1f232c; --line:#2a2f3a;
+    --text:#e8eaed; --muted:#9aa3af; --accent:#ff7a45; --accent2:#4f9dff;
+    --green:#3ecf8e; --yellow:#f5c542;
+  }
+  @media (prefers-color-scheme: light){
+    :root{--bg:#f5f6f8;--card:#fff;--card2:#f0f2f5;--line:#e2e5ea;--text:#1a1d23;--muted:#606874;
+      --green:#0f7a4d;--yellow:#8a6300;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:28px 20px 60px}
+  h1{font-size:26px;margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 22px;font-size:14px}
+  .sub a{color:var(--accent2);text-decoration:none}
+  .sub a:hover{text-decoration:underline}
+  .home{display:inline-block;margin-bottom:14px;color:var(--muted);text-decoration:none;font-size:12.5px}
+  .home:hover{color:var(--accent2);text-decoration:underline}
+
+  .controls{display:grid;grid-template-columns:2fr 1fr;gap:12px;align-items:end;margin-bottom:8px}
+  @media(max-width:560px){.controls{grid-template-columns:1fr}}
+  .fld{display:flex;flex-direction:column;gap:5px}
+  .fld label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+  input[type=search],select{background:var(--card);border:1px solid var(--line);color:var(--text);
+    border-radius:9px;padding:10px 12px;font-size:14px;outline:none;width:100%}
+  input[type=search]:focus,select:focus{border-color:var(--accent)}
+  .meta{display:flex;justify-content:space-between;align-items:center;margin:14px 0 12px;color:var(--muted);font-size:13px}
+
+  .co{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+  .co:hover{border-color:var(--accent2)}
+  .co h2{font-size:17px;margin:0 0 2px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .type{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:6px;text-transform:uppercase;
+    letter-spacing:.4px;background:rgba(79,157,255,.14);border:1px solid rgba(79,157,255,.35);color:var(--accent2)}
+  .type.legacy{background:rgba(154,163,175,.13);border-color:var(--line);color:var(--muted)}
+  .type.unverified{background:rgba(245,197,66,.13);border-color:rgba(245,197,66,.35);color:var(--yellow)}
+  .type.nearby{background:rgba(154,163,175,.13);border-color:var(--line);color:var(--muted)}
+  @media (prefers-color-scheme: light){.type{color:#1b5fbe}}
+  .contact{display:flex;flex-wrap:wrap;gap:6px 18px;margin:8px 0 10px;font-size:13.5px;color:var(--muted)}
+  .contact a{color:var(--accent2);text-decoration:none}
+  .contact a:hover{text-decoration:underline}
+  .contact .lbl{color:var(--muted);opacity:.75;margin-right:4px;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  .svc{margin:0;color:var(--text);font-size:14px}
+  .addr{color:var(--muted);font-size:12.5px;margin-top:8px}
+  .src{margin-top:8px;font-size:11.5px;color:var(--muted)}
+  .src a{color:var(--muted);text-decoration:none}
+  .src a:hover{color:var(--accent2);text-decoration:underline}
+  .empty{padding:40px;text-align:center;color:var(--muted)}
+  .foot{margin-top:24px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="home" href="../index.html">&larr; All tools</a>
+  <h1>Aviation Companies &mdash; Burnet, TX</h1>
+  <p class="sub" id="sub"></p>
+
+  <div class="controls">
+    <div class="fld">
+      <label>Search name / services / phone</label>
+      <input id="q" type="search" placeholder="e.g. avionics, training, fuel..." autocomplete="off">
+    </div>
+    <div class="fld">
+      <label>Type</label>
+      <select id="type"><option value="">All</option></select>
+    </div>
+  </div>
+
+  <div class="meta"><div id="count"></div></div>
+
+  <div id="list"></div>
+  <div class="empty" id="empty" hidden>No companies match.</div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script id="companies-data" type="application/json">
+{"place":"Burnet, TX 78611","airport":"Burnet Municipal Airport / Kate Craddock Field (KBMQ)","researched":"2026-07-31","companies":[{"name":"Crosby Flying Services LLC","type":"FBO & Maintenance","phone":"(512) 756-6655","email":"bmq@crosby.aero","address":"2302 S. Water Street, Burnet, TX 78611","website":"https://www.crosbyflying.com","services":"FBO and airport manager at KBMQ. Full- and self-service Jet-A+ and 100LL (Avfuel), on-site A&P maintenance shop, aircraft rental (two Cessna 172s), charter, GPU/lavatory service, transient hangar options, crew and training rooms, courtesy car and rental-car coordination; no ramp, landing, or tie-down fees. Also operates FBOs in Garden City and Pecos, TX.","status":"active","sources":["https://www.crosbyflying.com/burnet-1","http://www.airnav.com/airport/kbmq"]},{"name":"C3 Air (Fly C3 LLC) / C3 Airworks","type":"Flight Training & Maintenance","phone":"(830) 265-2411 (flight school) / (830) 220-1863 (maintenance)","email":"info@flyc3.com","address":"3202 S. Water Street, Burnet, TX 78611","website":"https://www.flyc3.com","services":"Flight school plus on-field general-aviation maintenance, run as two arms of one operation. Training: tailwheel endorsement (basic and advanced), floatplane rating, private, instrument, commercial, Cirrus, CFI, and custom coursework, specialising in tailwheel and off-airport work. Fleet includes a PA-18 Super Cub on 31-inch tundra tires, CC-18 Top Cub amphibian, Piper Archers, Cessna 172, and Cirrus SR20. C3 Airworks (mx@c3airworks.com) handles annual inspections, avionics, and major repairs.","status":"active","sources":["https://www.flyc3.com/about-c3","https://c3.hppth.com/"]},{"name":"ProMark Aviation Services","type":"Flight Training","phone":"(830) 385-1593","email":"ken@promarkaviation.net","address":"Burnet Municipal Airport (KBMQ), Burnet, TX 78611","website":"https://www.promarkaviation.net","services":"Advanced flight training run by nine-time Master CFI Ken Wittekiend, 40+ years instructing and 8,000+ hours given. Specialises in tailwheel, seaplane/floatplane, and Beech Bonanza transition training, plus practical-test (checkride) preparation, instrument work, and aviation speaking and seminars.","status":"active","sources":["https://www.promarkaviation.net","https://www.aopa.org/destinations/business/29971"]},{"name":"Texas Flight School","type":"Flight Training","phone":"(512) 234-0045","email":null,"address":"3242 S. Water Street, Burnet, TX 78611","website":"https://texasflightschool.com","services":"Flight school specialising in instrument ratings: roughly half the training hours flown in full-motion simulators, the rest in aircraft. Private and commercial training, Mooney transition and checkouts, complex and high-performance endorsements. Fleet includes a Cessna 172 (G5/430 GPS), Mooneys, and Cessna 340/421C twins. Same location and phone as sister operation Aircraft Simulator Training. Phone answered 24/7.","status":"active","sources":["https://texasflightschool.com/"]},{"name":"Aircraft Simulator Training","type":"Flight Training","phone":"(512) 234-0045","email":null,"address":"3242 S. Water Street, Burnet, TX 78611","website":"https://aircraftsimulatortraining.com","services":"Small specialised simulator training facility: one-on-one instruction in full-motion sims with six degrees of movement. Twin-piston, turboprop, advanced maneuvering, second-in-command, airline-prep, and insurance-approved initial/recurrent courses; pilot shop on site. Second location at Georgetown Municipal Airport. Sister operation of Texas Flight School.","status":"active","sources":["https://aircraftsimulatortraining.com/contact-us/"]},{"name":"Daniel's Avionics LLC","type":"Avionics","phone":"(325) 248-7319 (Daniel) / (480) 285-4013 (Tony)","email":null,"address":"2302 S. Water Street, Burnet, TX 78611 (by appointment)","website":"https://danielsavionics.com","services":"FAA Part 145 certified repair station (cert. DXDR595X) rated for limited airframe, instrument, and radio work. Avionics sales, installation, and repair for general-aviation aircraft; recommended in owner communities (e.g. Mooney) for panel work.","status":"active","sources":["https://www.airresearch.com/features/repair-stations/city/burnet-texas/","https://danielsavionics.com/contact"]},{"name":"CareFlite (Burnet base)","type":"Air Medical","phone":"(972) 339-4200","email":null,"address":"Burnet Municipal Airport, 2302 S. Water Street, Burnet, TX 78611","website":"https://careflite.org","services":"Nonprofit air-ambulance operator (est. 1979, HQ Irving TX) with a helicopter EMS base at Burnet Municipal Airport - one of seven bases statewide. Bell 407GXi-class aircraft flying IFR-capable emergency transport, including whole-blood, ECMO, organ-retrieval, and neonatal missions. A new hangar and crew-rest facility at the airport was permitted in 2025 (~$985k).","status":"active","sources":["https://careflite.org/helicopter-ems","https://www.airmedandrescue.com/latest/news/careflite-open-new-air-medical-base-texas"]},{"name":"Highland Lakes Squadron, Commemorative Air Force","type":"Museum / Nonprofit","phone":"(512) 756-2226","email":"caf@tstar.net","address":"2402 South Water Street, Burnet, TX 78611","website":"https://www.highlandlakessquadron.com","services":"All-volunteer 501(c)(3) WWII aviation museum and flying squadron of the Commemorative Air Force, founded 1992. Restores, maintains, and flies vintage aircraft including a C-47, T-6 SNJ, PT-19, and L-17; hosts the annual Bluebonnet Airshow, educational programs, and a cadet initiative. Museum open Wed/Sat/Sun.","status":"active","sources":["https://www.highlandlakessquadron.com/website-builder/contact-us","https://commemorativeairforce.org/units/40"]},{"name":"City of Burnet - Burnet Municipal Airport (KBMQ)","type":"Airport Operator","phone":"(512) 756-3214","email":"afeild@cityofburnet.com","address":"2302 S. Water Street, Burnet, TX 78611","website":"https://www.cityofburnet.com/airport","services":"City-owned public airport (Kate Craddock Field), one mile south of TX-29 on US-281, covering 143 acres at 1,283 ft elevation. 5,001 ft lighted runway with full-length taxiway, rated to 30,000 lb per wheel. Hangar and ground leasing (waitlist), based and transient aircraft storage. Day-to-day FBO operations contracted to Crosby Flying Services.","status":"active","sources":["https://www.businessairnews.com/hb_airportpage.html?recnum=7871","https://en.wikipedia.org/wiki/Burnet_Municipal_Airport"]},{"name":"Faulkner's Air Shop Inc","type":"FBO & Maintenance","phone":"(512) 756-6655","email":null,"address":"2302 S. Water Street, Burnet, TX 78611","website":"http://faulknersairshop.com","services":"Longtime FBO and maintenance shop at KBMQ (30+ years): aircraft maintenance, rebuilding, rental, and fuel. Legacy operation - the FBO role has since passed to Crosby Flying Services, its website is offline, and its listed phone now reaches Crosby; many directories still carry the old listing.","status":"legacy","sources":["https://www.chamberofcommerce.com/united-states/texas/burnet/aircraft-rental-service/6727813-faulkners-air-shop","https://www.flightaware.com/resources/airport/KBMQ/services"]},{"name":"A Detailed Flight","type":"Detailing","phone":"(737) 600-6440","email":null,"address":"Serves KBMQ (mobile)","website":"http://www.detailedflight.com","services":"Mobile aircraft detailing and cleaning service listed as a provider at Burnet Municipal Airport, also listed at Austin Executive Airport. Website was offline at research time; phone listing via FlightAware. Status uncertain.","status":"unverified","sources":["https://www.flightaware.com/resources/airport/KBMQ/services","https://www.austinexecutiveairport.com/hjc"]},{"name":"TravelTech Aircraft Services","type":"Maintenance","phone":"(512) 947-8321","email":null,"address":"Off-field - listed by AirNav as ~32 miles from KBMQ","website":null,"services":"Aircraft maintenance, avionics sales and service, aircraft painting, and cleaning/detailing. Listed on AirNav's KBMQ page as a nearby service provider rather than a based tenant - included for completeness since pilots at Burnet are routinely referred to it.","status":"nearby","sources":["http://www.airnav.com/airport/kbmq"]}]}
+</script>
+
+<script>
+const DATA = JSON.parse(document.getElementById("companies-data").textContent);
+const CO = DATA.companies;
+
+const $ = (id) => document.getElementById(id);
+const q = $("q"), typeSel = $("type");
+
+for (const c of CO) c._hay = [c.name, c.type, c.services, c.phone, c.address].join(" ").toLowerCase();
+
+for (const t of [...new Set(CO.map(c => c.type))]) {
+  const o = document.createElement("option");
+  o.value = t; o.textContent = t;
+  typeSel.appendChild(o);
+}
+
+function esc(s) {
+  return (s || "").replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+}
+function host(u) { try { return new URL(u).host.replace(/^www\./, ""); } catch { return u; } }
+
+function cardHtml(c) {
+  const badge = c.status === "active" ? "" : ` <span class="type ${c.status}">${c.status}</span>`;
+  const phones = c.phone.split("/").map(p =>
+    `<a href="tel:${p.replace(/[^+\d]/g, "")}">${esc(p.trim())}</a>`).join(" / ");
+  return `<div class="co">
+    <h2>${esc(c.name)} <span class="type">${esc(c.type)}</span>${badge}</h2>
+    <div class="contact">
+      <span><span class="lbl">Tel</span>${phones}</span>
+      ${c.website ? `<span><span class="lbl">Web</span><a href="${c.website}" target="_blank" rel="noopener">${esc(host(c.website))}</a></span>` : ""}
+      ${c.email ? `<span><span class="lbl">Email</span><a href="mailto:${c.email}">${esc(c.email)}</a></span>` : ""}
+    </div>
+    <p class="svc">${esc(c.services)}</p>
+    <div class="addr">${esc(c.address)}</div>
+    <div class="src">Sources: ${c.sources.map(s =>
+      `<a href="${s}" target="_blank" rel="noopener">${esc(host(s))}</a>`).join(" &middot; ")}</div>
+  </div>`;
+}
+
+function render() {
+  const terms = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const list = CO.filter(c =>
+    (!typeSel.value || c.type === typeSel.value) &&
+    terms.every(t => c._hay.includes(t)));
+  $("list").innerHTML = list.map(cardHtml).join("");
+  $("empty").hidden = list.length > 0;
+  $("count").textContent = `${list.length} of ${CO.length} companies`;
+}
+
+q.addEventListener("input", render);
+typeSel.addEventListener("change", render);
+
+$("sub").innerHTML =
+  `Aviation companies and organizations based at or serving ` +
+  `<a href="https://en.wikipedia.org/wiki/Burnet_Municipal_Airport">${esc(DATA.airport)}</a> ` +
+  `in ${esc(DATA.place)}. Hand-researched from airport directories, FAA repair-station ` +
+  `records, and company sites; sources on each card. Researched ${DATA.researched}.`;
+$("foot").textContent =
+  "Small-town roster - entries marked legacy or unverified reflect stale directory " +
+  "listings or unreachable websites at research time. Verify by phone before relying on a listing.";
+
+render();
+</script>
+</body>
+</html>

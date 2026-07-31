@@ -13,6 +13,7 @@ its data baked in - no server, no build step to view, no API keys.
 | [`romanian-western-companies/`](romanian-western-companies/) | Research shortlist of 43 active Romanian SRLs with public evidence of Western ownership or leadership, filterable by nationality and headcount | [open](https://gabe-crafting.github.io/rtbf-tools/romanian-western-companies/) |
 | [`ev-donor-cars/`](ev-donor-cars/) | Searchable list of all 665 donor cars on evbreakers.com by name, engine code, and battery capacity, each linking to its parts page | [open](https://gabe-crafting.github.io/rtbf-tools/ev-donor-cars/) |
 | [`fighttorepair-followers/`](fighttorepair-followers/) | The 211 publicly listed followers of Substack's @fighttorepair, each with the day they last liked or replied to anything | [open](https://gabe-crafting.github.io/rtbf-tools/fighttorepair-followers/) |
+| [`burnet-aviation/`](burnet-aviation/) | Hand-researched roster of the 12 aviation companies at Burnet Municipal Airport (KBMQ), Burnet TX, with phones, services, and sources | [open](https://gabe-crafting.github.io/rtbf-tools/burnet-aviation/) |
 
 Each folder is self-contained: its own `index.html`, its own dataset, its own
 build scripts, and its own README explaining how to regenerate it.
@@ -26,6 +27,7 @@ substack-accounts/             # Python toolkit -> scrape.py, build_page.py
 romanian-western-companies/    # Node script -> scripts/build-data.mjs
 ev-donor-cars/                 # Node scripts -> scrape.js, build_page.js
 fighttorepair-followers/       # Node scripts -> scrape.js, build_page.js
+burnet-aviation/               # hand-researched data -> build_page.js
 ```
 
 ## Adding a tool

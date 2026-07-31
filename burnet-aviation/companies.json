@@ -1,0 +1,139 @@
+{
+ "place": "Burnet, TX 78611",
+ "airport": "Burnet Municipal Airport / Kate Craddock Field (KBMQ)",
+ "researched": "2026-07-31",
+ "companies": [
+  {
+   "name": "Crosby Flying Services LLC",
+   "type": "FBO & Maintenance",
+   "phone": "(512) 756-6655",
+   "email": "bmq@crosby.aero",
+   "address": "2302 S. Water Street, Burnet, TX 78611",
+   "website": "https://www.crosbyflying.com",
+   "services": "FBO and airport manager at KBMQ. Full- and self-service Jet-A+ and 100LL (Avfuel), on-site A&P maintenance shop, aircraft rental (two Cessna 172s), charter, GPU/lavatory service, transient hangar options, crew and training rooms, courtesy car and rental-car coordination; no ramp, landing, or tie-down fees. Also operates FBOs in Garden City and Pecos, TX.",
+   "status": "active",
+   "sources": ["https://www.crosbyflying.com/burnet-1", "http://www.airnav.com/airport/kbmq"]
+  },
+  {
+   "name": "C3 Air (Fly C3 LLC) / C3 Airworks",
+   "type": "Flight Training & Maintenance",
+   "phone": "(830) 265-2411 (flight school) / (830) 220-1863 (maintenance)",
+   "email": "info@flyc3.com",
+   "address": "3202 S. Water Street, Burnet, TX 78611",
+   "website": "https://www.flyc3.com",
+   "services": "Flight school plus on-field general-aviation maintenance, run as two arms of one operation. Training: tailwheel endorsement (basic and advanced), floatplane rating, private, instrument, commercial, Cirrus, CFI, and custom coursework, specialising in tailwheel and off-airport work. Fleet includes a PA-18 Super Cub on 31-inch tundra tires, CC-18 Top Cub amphibian, Piper Archers, Cessna 172, and Cirrus SR20. C3 Airworks (mx@c3airworks.com) handles annual inspections, avionics, and major repairs.",
+   "status": "active",
+   "sources": ["https://www.flyc3.com/about-c3", "https://c3.hppth.com/"]
+  },
+  {
+   "name": "ProMark Aviation Services",
+   "type": "Flight Training",
+   "phone": "(830) 385-1593",
+   "email": "ken@promarkaviation.net",
+   "address": "Burnet Municipal Airport (KBMQ), Burnet, TX 78611",
+   "website": "https://www.promarkaviation.net",
+   "services": "Advanced flight training run by nine-time Master CFI Ken Wittekiend, 40+ years instructing and 8,000+ hours given. Specialises in tailwheel, seaplane/floatplane, and Beech Bonanza transition training, plus practical-test (checkride) preparation, instrument work, and aviation speaking and seminars.",
+   "status": "active",
+   "sources": ["https://www.promarkaviation.net", "https://www.aopa.org/destinations/business/29971"]
+  },
+  {
+   "name": "Texas Flight School",
+   "type": "Flight Training",
+   "phone": "(512) 234-0045",
+   "email": null,
+   "address": "3242 S. Water Street, Burnet, TX 78611",
+   "website": "https://texasflightschool.com",
+   "services": "Flight school specialising in instrument ratings: roughly half the training hours flown in full-motion simulators, the rest in aircraft. Private and commercial training, Mooney transition and checkouts, complex and high-performance endorsements. Fleet includes a Cessna 172 (G5/430 GPS), Mooneys, and Cessna 340/421C twins. Same location and phone as sister operation Aircraft Simulator Training. Phone answered 24/7.",
+   "status": "active",
+   "sources": ["https://texasflightschool.com/"]
+  },
+  {
+   "name": "Aircraft Simulator Training",
+   "type": "Flight Training",
+   "phone": "(512) 234-0045",
+   "email": null,
+   "address": "3242 S. Water Street, Burnet, TX 78611",
+   "website": "https://aircraftsimulatortraining.com",
+   "services": "Small specialised simulator training facility: one-on-one instruction in full-motion sims with six degrees of movement. Twin-piston, turboprop, advanced maneuvering, second-in-command, airline-prep, and insurance-approved initial/recurrent courses; pilot shop on site. Second location at Georgetown Municipal Airport. Sister operation of Texas Flight School.",
+   "status": "active",
+   "sources": ["https://aircraftsimulatortraining.com/contact-us/"]
+  },
+  {
+   "name": "Daniel's Avionics LLC",
+   "type": "Avionics",
+   "phone": "(325) 248-7319 (Daniel) / (480) 285-4013 (Tony)",
+   "email": null,
+   "address": "2302 S. Water Street, Burnet, TX 78611 (by appointment)",
+   "website": "https://danielsavionics.com",
+   "services": "FAA Part 145 certified repair station (cert. DXDR595X) rated for limited airframe, instrument, and radio work. Avionics sales, installation, and repair for general-aviation aircraft; recommended in owner communities (e.g. Mooney) for panel work.",
+   "status": "active",
+   "sources": ["https://www.airresearch.com/features/repair-stations/city/burnet-texas/", "https://danielsavionics.com/contact"]
+  },
+  {
+   "name": "CareFlite (Burnet base)",
+   "type": "Air Medical",
+   "phone": "(972) 339-4200",
+   "email": null,
+   "address": "Burnet Municipal Airport, 2302 S. Water Street, Burnet, TX 78611",
+   "website": "https://careflite.org",
+   "services": "Nonprofit air-ambulance operator (est. 1979, HQ Irving TX) with a helicopter EMS base at Burnet Municipal Airport - one of seven bases statewide. Bell 407GXi-class aircraft flying IFR-capable emergency transport, including whole-blood, ECMO, organ-retrieval, and neonatal missions. A new hangar and crew-rest facility at the airport was permitted in 2025 (~$985k).",
+   "status": "active",
+   "sources": ["https://careflite.org/helicopter-ems", "https://www.airmedandrescue.com/latest/news/careflite-open-new-air-medical-base-texas"]
+  },
+  {
+   "name": "Highland Lakes Squadron, Commemorative Air Force",
+   "type": "Museum / Nonprofit",
+   "phone": "(512) 756-2226",
+   "email": "caf@tstar.net",
+   "address": "2402 South Water Street, Burnet, TX 78611",
+   "website": "https://www.highlandlakessquadron.com",
+   "services": "All-volunteer 501(c)(3) WWII aviation museum and flying squadron of the Commemorative Air Force, founded 1992. Restores, maintains, and flies vintage aircraft including a C-47, T-6 SNJ, PT-19, and L-17; hosts the annual Bluebonnet Airshow, educational programs, and a cadet initiative. Museum open Wed/Sat/Sun.",
+   "status": "active",
+   "sources": ["https://www.highlandlakessquadron.com/website-builder/contact-us", "https://commemorativeairforce.org/units/40"]
+  },
+  {
+   "name": "City of Burnet - Burnet Municipal Airport (KBMQ)",
+   "type": "Airport Operator",
+   "phone": "(512) 756-3214",
+   "email": "afeild@cityofburnet.com",
+   "address": "2302 S. Water Street, Burnet, TX 78611",
+   "website": "https://www.cityofburnet.com/airport",
+   "services": "City-owned public airport (Kate Craddock Field), one mile south of TX-29 on US-281, covering 143 acres at 1,283 ft elevation. 5,001 ft lighted runway with full-length taxiway, rated to 30,000 lb per wheel. Hangar and ground leasing (waitlist), based and transient aircraft storage. Day-to-day FBO operations contracted to Crosby Flying Services.",
+   "status": "active",
+   "sources": ["https://www.businessairnews.com/hb_airportpage.html?recnum=7871", "https://en.wikipedia.org/wiki/Burnet_Municipal_Airport"]
+  },
+  {
+   "name": "Faulkner's Air Shop Inc",
+   "type": "FBO & Maintenance",
+   "phone": "(512) 756-6655",
+   "email": null,
+   "address": "2302 S. Water Street, Burnet, TX 78611",
+   "website": "http://faulknersairshop.com",
+   "services": "Longtime FBO and maintenance shop at KBMQ (30+ years): aircraft maintenance, rebuilding, rental, and fuel. Legacy operation - the FBO role has since passed to Crosby Flying Services, its website is offline, and its listed phone now reaches Crosby; many directories still carry the old listing.",
+   "status": "legacy",
+   "sources": ["https://www.chamberofcommerce.com/united-states/texas/burnet/aircraft-rental-service/6727813-faulkners-air-shop", "https://www.flightaware.com/resources/airport/KBMQ/services"]
+  },
+  {
+   "name": "A Detailed Flight",
+   "type": "Detailing",
+   "phone": "(737) 600-6440",
+   "email": null,
+   "address": "Serves KBMQ (mobile)",
+   "website": "http://www.detailedflight.com",
+   "services": "Mobile aircraft detailing and cleaning service listed as a provider at Burnet Municipal Airport, also listed at Austin Executive Airport. Website was offline at research time; phone listing via FlightAware. Status uncertain.",
+   "status": "unverified",
+   "sources": ["https://www.flightaware.com/resources/airport/KBMQ/services", "https://www.austinexecutiveairport.com/hjc"]
+  },
+  {
+   "name": "TravelTech Aircraft Services",
+   "type": "Maintenance",
+   "phone": "(512) 947-8321",
+   "email": null,
+   "address": "Off-field - listed by AirNav as ~32 miles from KBMQ",
+   "website": null,
+   "services": "Aircraft maintenance, avionics sales and service, aircraft painting, and cleaning/detailing. Listed on AirNav's KBMQ page as a nearby service provider rather than a based tenant - included for completeness since pilots at Burnet are routinely referred to it.",
+   "status": "nearby",
+   "sources": ["http://www.airnav.com/airport/kbmq"]
+  }
+ ]
+}
