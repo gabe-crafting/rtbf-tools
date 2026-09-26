@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>mavminimums</title>
+<style>
+  :root {
+    --green: #66BB6A; --yellow: #FFCC4D; --red: #EF5350;
+    --surface: #FFFBFE; --on-surface: #1C1B1F; --primary: #6750A4; --outline: #79747E;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    min-height: 100dvh; display: grid; place-items: center; background: #ece8ef;
+    font-family: Roboto, "Segoe UI", system-ui, sans-serif; color: var(--on-surface);
+  }
+  .phone {
+    width: min(100vw, 412px); height: min(100dvh, 892px); background: var(--surface);
+    border-radius: 28px; overflow: hidden; display: flex; flex-direction: column;
+    box-shadow: 0 18px 50px rgba(28, 27, 31, 0.18); position: relative;
+  }
+  .status { height: 28px; padding: 8px 22px 0; display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; }
+  .pager { display: flex; justify-content: space-evenly; padding: 10px 16px; }
+  .pager button {
+    appearance: none; border: 0; background: transparent; padding: 4px 12px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    font: inherit; font-size: 13px; color: rgba(28, 27, 31, 0.4);
+  }
+  .pager button[aria-selected="true"] { font-weight: 700; color: var(--on-surface); }
+  .pager button .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(28, 27, 31, 0.2); }
+  .pager button[aria-selected="true"] .dot { width: 8px; height: 8px; background: var(--primary); }
+  .screen { flex: 1; min-height: 0; display: none; flex-direction: column; padding: 0 16px 12px; }
+  .screen.active { display: flex; }
+  .hdr { display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; }
+  h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .voice { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: rgba(28, 27, 31, 0.6); }
+  .switch { width: 52px; height: 32px; border: 0; border-radius: 16px; background: #e7e0ec; position: relative; cursor: pointer; }
+  .switch::after { content: ""; position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+  .switch[aria-checked="true"] { background: var(--primary); }
+  .switch[aria-checked="true"]::after { transform: translateX(20px); }
+  .stack { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 8px; }
+  .row { display: flex; gap: 8px; min-height: 0; }
+  .tile {
+    background: var(--yellow); border-radius: 10px; min-height: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 4px 8px; text-align: center; color: #000; transition: background 0.35s ease;
+  }
+  .tile.grow-11 { flex: 1.1; } .tile.grow-09 { flex: 0.9; } .row .tile { flex: 1; }
+  .cap { font-size: 10px; font-weight: 500; letter-spacing: 0.3px; color: rgba(0,0,0,0.55); }
+  .val { font-size: 24px; font-weight: 700; line-height: 1.15; }
+  .tile.compact .val { font-size: 18px; } .tile.prominent .val { font-size: 28px; }
+  .sub { margin-top: 2px; font-size: 11px; line-height: 1.2; color: rgba(0,0,0,0.72); }
+  .field { border: 1px solid var(--outline); border-radius: 4px; padding: 8px 12px 10px; position: relative; }
+  .field label { position: absolute; top: -8px; left: 10px; background: var(--surface); padding: 0 4px; font-size: 12px; color: rgba(28,27,31,0.7); }
+  .field select { width: 100%; border: 0; background: transparent; font: inherit; font-size: 16px; padding: 8px 0 2px; }
+  .log-status { margin: 8px 0 0; font-size: 12px; font-weight: 500; color: rgba(28,27,31,0.55); }
+  .log-status.live { color: var(--primary); }
+  .samples { margin: 0 0 8px; font-size: 11px; color: rgba(28,27,31,0.5); }
+  .log { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: auto; }
+  .log-head, .log-row {
+    display: grid; grid-template-columns: 1.1fr 0.7fr 0.6fr; gap: 8px; padding: 6px 8px;
+    font-family: ui-monospace, "Roboto Mono", monospace; font-size: 11px;
+  }
+  .log-head { font-weight: 700; background: rgba(231,224,236,0.5); position: sticky; top: 0; }
+  .empty { min-height: 120px; display: grid; place-items: center; color: rgba(28,27,31,0.4); font-size: 14px; }
+  .actions { display: flex; gap: 8px; padding-top: 10px; }
+  .actions button {
+    flex: 1; min-height: 40px; border-radius: 20px; border: 1px solid var(--outline);
+    background: transparent; color: var(--primary); font: inherit; font-size: 14px; font-weight: 500; cursor: pointer;
+  }
+  .actions button:disabled { color: rgba(28,27,31,0.38); border-color: rgba(28,27,31,0.12); cursor: default; }
+  .toast {
+    position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%) translateY(8px);
+    max-width: calc(100% - 32px); padding: 8px 12px; border-radius: 8px; background: #1C1B1F; color: #fff;
+    font-size: 13px; line-height: 1.35; text-align: center; white-space: pre-line;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 5;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @media (max-width: 460px) {
+    body { background: var(--surface); }
+    .phone { width: 100%; height: 100dvh; border-radius: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="status"><span id="clock">9:41</span><span>LTE</span></div>
+    <nav class="pager">
+      <button type="button" id="tab-mav" aria-selected="true">mavminimums<span class="dot"></span></button>
+      <button type="button" id="tab-batt" aria-selected="false">batteryflattery<span class="dot"></span></button>
+    </nav>
+    <section class="screen active" id="page-mav">
+      <header class="hdr">
+        <h1>mavminimums</h1>
+        <div class="voice">
+          <span>Voice</span><span id="voice-ico">🔊</span>
+          <button type="button" class="switch" id="voice" role="switch" aria-checked="true" aria-label="Voice"></button>
+        </div>
+      </header>
+      <div class="stack">
+        <div class="tile grow-11" id="tile-mode"><div class="cap">Mode</div><div class="val" id="val-mode">—</div></div>
+        <div class="row" style="flex:1">
+          <div class="tile" id="tile-volts"><div class="cap">Volts</div><div class="val" id="val-volts">—</div></div>
+          <div class="tile" id="tile-amps"><div class="cap">Amps</div><div class="val" id="val-amps">—</div></div>
+          <div class="tile" id="tile-batt"><div class="cap">Batt%</div><div class="val" id="val-batt">—</div></div>
+        </div>
+        <div class="tile grow-09" id="tile-alt"><div class="cap">Altitude</div><div class="val" id="val-alt">—</div></div>
+        <div class="row" style="flex:0.85">
+          <div class="tile compact" id="tile-telem"><div class="cap">Telem</div><div class="val" id="val-telem">—</div><div class="sub" id="sub-telem"></div></div>
+          <div class="tile compact" id="tile-radio"><div class="cap">Radio</div><div class="val" id="val-radio">—</div><div class="sub" id="sub-radio"></div></div>
+        </div>
+        <div class="row" style="flex:1">
+          <div class="tile prominent" id="tile-ekf"><div class="val">EKF</div></div>
+          <div class="tile" id="tile-gps"><div class="cap">GPS</div><div class="val" id="val-gps">—</div><div class="sub" id="sub-gps"></div></div>
+        </div>
+        <div class="tile grow-11" id="tile-rtl"><div class="cap">RTL</div><div class="val" id="val-rtl">Telemetry lost</div></div>
+        <div class="tile grow-11" id="tile-arm"><div class="cap">ARM</div><div class="val" id="val-arm">—</div></div>
+      </div>
+    </section>
+    <section class="screen" id="page-batt">
+      <h1 style="padding-bottom:8px">batteryflattery</h1>
+      <div class="field">
+        <label for="pack">Battery pack</label>
+        <select id="pack">
+          <option>1S  (3.7V nom · 4.2V full)</option>
+          <option>3S  (11.1V nom · 12.6V full)</option>
+          <option selected>4S  (14.8V nom · 16.8V full)</option>
+          <option>6S  (22.2V nom · 25.2V full)</option>
+        </select>
+      </div>
+      <p class="log-status" id="log-status">Log paused — no USB link</p>
+      <p class="samples" id="sample-count">0 samples</p>
+      <div class="log" id="log-scroller">
+        <div class="log-head"><span>Time</span><span>V</span><span>A</span></div>
+        <div id="log-body"><div class="empty" id="log-empty">Arm to start logging</div></div>
+      </div>
+      <div class="actions">
+        <button type="button" id="btn-reset">Reset</button>
+        <button type="button" id="btn-download" disabled>Download</button>
+        <button type="button">AI</button>
+      </div>
+    </section>
+    <div class="toast" id="toast" role="status"></div>
+  </div>
+<script>
+(function () {
+  var G = "#66BB6A", Y = "#FFCC4D", R = "#EF5350";
+  var LOW = 14.0, CRIT = 13.5, WEAK = 100, HDOP_MAX = 2.0;
+  var voiceOn = true, samples = [], logClock = Date.now(), prev = {}, lastPhrase = "", lastPhraseAt = 0;
+
+  document.getElementById("tab-mav").onclick = function () { page(0); };
+  document.getElementById("tab-batt").onclick = function () { page(1); };
+  function page(i) {
+    document.getElementById("page-mav").classList.toggle("active", i === 0);
+    document.getElementById("page-batt").classList.toggle("active", i === 1);
+    document.getElementById("tab-mav").setAttribute("aria-selected", i === 0 ? "true" : "false");
+    document.getElementById("tab-batt").setAttribute("aria-selected", i === 1 ? "true" : "false");
+  }
+  document.getElementById("voice").onclick = function () {
+    voiceOn = !voiceOn;
+    this.setAttribute("aria-checked", voiceOn ? "true" : "false");
+    document.getElementById("voice-ico").textContent = voiceOn ? "\uD83D\uDD0A" : "\uD83D\uDD07";
+  };
+  document.getElementById("btn-reset").onclick = function () { clearLog(); };
+
+  function paint(id, color) { document.getElementById(id).style.background = color; }
+  function text(id, value) { document.getElementById(id).textContent = value; }
+  function battColor(s) {
+    if (s.linkStale && s.volts != null) return R;
+    if (s.volts == null) return Y;
+    if (s.volts <= CRIT) return R;
+    if (s.volts <= LOW) return Y;
+    return G;
+  }
+  function battLevel(volts) {
+    if (volts <= CRIT) return "critical";
+    if (volts <= LOW) return "low";
+    return "ok";
+  }
+  function rtlOf(s) {
+    if (!s.connected || s.linkStale || !s.heartbeat) return { ready: false, label: "Telemetry lost" };
+    if (!s.gps || s.fix < 3) return { ready: false, label: "GPS: no 3D fix" };
+    if (s.hdop >= HDOP_MAX) return { ready: false, label: "GPS: HDOP too high" };
+    if (!s.ekf) return { ready: false, label: "EKF: unhealthy" };
+    return { ready: true, label: "RTL ready" };
+  }
+  function speak(phrase) {
+    if (!phrase || !voiceOn) return;
+    var now = Date.now();
+    if (phrase === lastPhrase && now - lastPhraseAt < 5000) return;
+    lastPhrase = phrase; lastPhraseAt = now;
+    var toast = document.getElementById("toast");
+    toast.textContent = phrase;
+    toast.classList.add("show");
+    clearTimeout(speak._t);
+    speak._t = setTimeout(function () { toast.classList.remove("show"); }, 1800);
+  }
+  function modePhrase(mode) {
+    return { RTL: "Return to Launch.", LOITER: "Loiter.", LAND: "Land.", ALT_HOLD: "Alt Hold." }[mode] || null;
+  }
+
+  function render(s) {
+    var phrases = [];
+    var bg = battColor(s);
+    paint("tile-volts", bg); paint("tile-amps", bg); paint("tile-batt", bg);
+    text("val-volts", s.volts == null ? "\u2014" : s.volts.toFixed(1) + "V");
+    text("val-amps", s.amps == null ? "\u2014" : Math.round(s.amps) + "A");
+    text("val-batt", s.pct == null ? "\u2014" : s.pct + "%");
+
+    if (!s.connected) { paint("tile-mode", Y); text("val-mode", "\u2014"); }
+    else if (s.linkStale) { paint("tile-mode", R); text("val-mode", s.mode); }
+    else { paint("tile-mode", G); text("val-mode", s.mode); }
+
+    if (s.linkStale || !s.gps) { paint("tile-alt", s.linkStale ? R : Y); text("val-alt", "\u2014"); }
+    else { paint("tile-alt", s.altMm ? G : Y); text("val-alt", s.rel + "m"); }
+
+    if (!s.telem || s.linkStale) { paint("tile-telem", Y); text("val-telem", "\u2014"); text("sub-telem", ""); }
+    else {
+      paint("tile-telem", s.rem < WEAK ? R : G);
+      text("val-telem", s.rssi + " \u00b7 " + s.rem); text("sub-telem", "RSSI \u00b7 remRSSI");
+    }
+    if (!s.radio || s.linkStale) { paint("tile-radio", Y); text("val-radio", "\u2014"); text("sub-radio", ""); }
+    else { paint("tile-radio", s.rc < WEAK ? R : G); text("val-radio", String(s.rc)); text("sub-radio", "RC RSSI"); }
+
+    paint("tile-ekf", (!s.heartbeat || s.linkStale || s.ekf == null) ? Y : (s.ekf ? G : Y));
+
+    if (s.linkStale || !s.gps) { paint("tile-gps", Y); text("val-gps", "\u2014"); text("sub-gps", ""); }
+    else if (s.fix >= 3) {
+      paint("tile-gps", G); text("val-gps", "GPS 3D");
+      text("sub-gps", "3D fix \u00b7 " + s.sats + " sats \u00b7 HDOP " + s.hdop.toFixed(1));
+    } else { paint("tile-gps", R); text("val-gps", "No fix"); text("sub-gps", "No fix"); }
+
+    var rtl = rtlOf(s);
+    paint("tile-rtl", rtl.ready ? G : R);
+    text("val-rtl", rtl.label);
+
+    if (!s.heartbeat || s.linkStale) { paint("tile-arm", Y); text("val-arm", "\u2014"); }
+    else if (s.armed) { paint("tile-arm", G); text("val-arm", "ARMED"); }
+    else { paint("tile-arm", R); text("val-arm", "DISARMED"); }
+
+    var status = document.getElementById("log-status");
+    if (!s.connected) { status.textContent = "Log paused \u2014 no USB link"; status.classList.remove("live"); }
+    else if (s.armed && !s.linkStale) { status.textContent = "Logging (armed)"; status.classList.add("live"); }
+    else { status.textContent = "Log paused \u2014 disarmed"; status.classList.remove("live"); }
+
+    if (prev.seen) {
+      var level = (s.volts != null && !s.linkStale) ? battLevel(s.volts) : null;
+      if (level && prev.level) {
+        if (level === "critical" && prev.level !== "critical") phrases.push("Battery critical.");
+        else if (level === "low" && prev.level === "ok") phrases.push("Battery low.");
+      }
+      if (prev.stale === false && s.linkStale) phrases.push("Telemetry lost.");
+      if (prev.rtl === true && !rtl.ready) phrases.push("Return to Launch unavailable. " + rtl.label);
+      if (prev.rtl === false && rtl.ready) phrases.push("Return to Launch ready.");
+      if (prev.armed != null && s.heartbeat && !s.linkStale && prev.armed !== !!s.armed) phrases.push(s.armed ? "Armed." : "Disarmed.");
+      if (prev.remOk === true && s.telem && !s.linkStale && s.rem < WEAK) phrases.push("SiK telemetry weak.");
+      if (prev.rcOk === true && s.radio && !s.linkStale && s.rc < WEAK) phrases.push("Control link weak.");
+      if (prev.ekf === true && s.ekf === false && !s.linkStale) phrases.push("Navigation warning.");
+      if (prev.ekf === false && s.ekf === true && !s.linkStale) phrases.push("Navigation healthy.");
+      if (s.heartbeat && !s.linkStale && prev.mode && prev.mode !== s.mode) {
+        var mp = modePhrase(s.mode); if (mp) phrases.push(mp);
+      }
+    }
+    prev = {
+      seen: true,
+      mode: s.mode || prev.mode,
+      armed: (s.heartbeat && !s.linkStale) ? !!s.armed : prev.armed,
+      level: (s.volts != null && !s.linkStale) ? battLevel(s.volts) : prev.level,
+      remOk: (s.telem && !s.linkStale) ? s.rem >= WEAK : prev.remOk,
+      rcOk: (s.radio && !s.linkStale) ? s.rc >= WEAK : prev.rcOk,
+      ekf: (s.heartbeat && !s.linkStale) ? s.ekf : prev.ekf,
+      rtl: rtl.ready,
+      stale: !!s.linkStale
+    };
+    if (phrases.length) speak(phrases.join("\n"));
+  }
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function clock(ms) { var d = new Date(ms); return pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds()); }
+  function refreshCount() {
+    document.getElementById("sample-count").textContent = samples.length + " samples";
+    document.getElementById("btn-download").disabled = samples.length === 0;
+  }
+  function clearLog() {
+    samples = [];
+    document.getElementById("log-body").innerHTML = '<div class="empty" id="log-empty">Arm to start logging</div>';
+    refreshCount();
+  }
+  function addSample(volts, amps) {
+    logClock += 1000;
+    samples.push(1);
+    var empty = document.getElementById("log-empty");
+    if (empty) empty.remove();
+    var el = document.createElement("div");
+    el.className = "log-row";
+    el.innerHTML = "<span>" + clock(logClock) + "</span><span>" + volts.toFixed(2) + "</span><span>" + amps.toFixed(1) + "</span>";
+    document.getElementById("log-body").appendChild(el);
+    var scroller = document.getElementById("log-scroller");
+    scroller.scrollTop = scroller.scrollHeight;
+    refreshCount();
+  }
+  function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  var nolink = { connected: false, linkStale: false, heartbeat: false, volts: null, amps: null, pct: null, gps: false, telem: false, radio: false };
+  var ready = {
+    connected: true, heartbeat: true, armed: false, mode: "LOITER", volts: 16.8, amps: 0.4, pct: 100,
+    gps: true, fix: 3, sats: 16, hdop: 0.8, altMm: 120000, rel: 0, telem: true, rssi: 220, rem: 210, radio: true, rc: 200, ekf: true
+  };
+  var flight = [
+    { mode: "LOITER", volts: 16.6, amps: 6, pct: 97, rel: 2, rssi: 210, rem: 200, rc: 190, ekf: true, hdop: 0.8, sats: 16 },
+    { mode: "ALT_HOLD", volts: 16.1, amps: 22, pct: 90, rel: 8, rssi: 208, rem: 198, rc: 186, ekf: true, hdop: 0.9, sats: 16 },
+    { mode: "ALT_HOLD", volts: 15.4, amps: 24, pct: 78, rel: 15, rssi: 200, rem: 186, rc: 170, ekf: true, hdop: 1.0, sats: 15 },
+    { mode: "LOITER", volts: 14.3, amps: 18, pct: 64, rel: 18, rssi: 196, rem: 160, rc: 150, ekf: true, hdop: 1.1, sats: 15 },
+    { mode: "LOITER", volts: 13.9, amps: 16, pct: 52, rel: 18, rssi: 190, rem: 72, rc: 148, ekf: true, hdop: 1.2, sats: 14 },
+    { mode: "LOITER", volts: 13.7, amps: 15, pct: 44, rel: 16, rssi: 188, rem: 150, rc: 64, ekf: true, hdop: 2.6, sats: 13 },
+    { mode: "RTL", volts: 13.4, amps: 12, pct: 36, rel: 10, rssi: 200, rem: 180, rc: 170, ekf: false, hdop: 1.1, sats: 14 },
+    { mode: "LAND", volts: 13.2, amps: 8, pct: 30, rel: 1, rssi: 206, rem: 188, rc: 176, ekf: true, hdop: 0.9, sats: 15 }
+  ];
+  function frame(step, armed) {
+    return {
+      connected: true, heartbeat: true, armed: armed, gps: true, telem: true, radio: true, fix: 3,
+      altMm: 120000 + step.rel * 1000, mode: step.mode, volts: step.volts, amps: step.amps, pct: step.pct,
+      rel: step.rel, rssi: step.rssi, rem: step.rem, rc: step.rc, ekf: step.ekf, hdop: step.hdop, sats: step.sats
+    };
+  }
+
+  async function run() {
+    while (true) {
+      clearLog();
+      prev = {};
+      render(nolink);
+      await wait(2000);
+      render(ready);
+      await wait(2200);
+      logClock = Date.now();
+      for (var i = 0; i < flight.length; i++) {
+        var f = frame(flight[i], true);
+        render(f);
+        addSample(f.volts, f.amps);
+        await wait(1300);
+      }
+      render(frame(flight[flight.length - 1], false));
+      await wait(2000);
+      var lost = frame(flight[flight.length - 1], false);
+      lost.linkStale = true;
+      render(lost);
+      await wait(2000);
+    }
+  }
+
+  function tick() {
+    var d = new Date();
+    document.getElementById("clock").textContent = d.getHours() + ":" + pad(d.getMinutes());
+  }
+  tick(); setInterval(tick, 30000); run();
+})();
+</script>
+</body>
+</html>

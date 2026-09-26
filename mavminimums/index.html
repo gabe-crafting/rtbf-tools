@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mavminimums</title>
+<style>
+  :root{
+    --bg:#0f1115; --line:#2a2f3a;
+    --text:#e8eaed; --muted:#9aa3af; --accent2:#4f9dff;
+  }
+  @media (prefers-color-scheme: light){
+    :root{--bg:#f5f6f8;--line:#e2e5ea;--text:#1a1d23;--muted:#606874;}
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .page{min-height:100%;display:flex;flex-direction:column;padding:22px 36px 36px}
+  .home{color:var(--muted);text-decoration:none;font-size:12.5px;align-self:flex-start}
+  .home:hover{color:var(--accent2);text-decoration:underline}
+  .slide{
+    flex:1;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,390px);
+    gap:56px;align-items:center;width:min(1120px,100%);margin:0 auto;
+  }
+  h1{font-size:clamp(48px,5.4vw,68px);line-height:1.05;letter-spacing:-.8px;margin:0 0 32px;font-weight:700}
+  .copy p{margin:0 0 22px;font-size:clamp(24px,2.3vw,32px);line-height:1.45;max-width:22em}
+  .copy p:last-child{margin-bottom:0}
+  .demo{
+    container-type:inline-size;
+    width:min(360px,calc((100dvh - 80px) * 412 / 892));
+    aspect-ratio:412 / 892;
+    border-radius:28px;overflow:hidden;
+    background:#FFFBFE;
+    box-shadow:0 24px 70px rgba(0,0,0,.38);
+    justify-self:end;
+  }
+  .demo iframe{
+    width:412px;height:892px;border:0;display:block;
+    transform:scale(calc(100cqw / 412px));transform-origin:top left;
+  }
+  @media (max-width:900px){
+    .page{padding:18px 18px 28px}
+    .slide{grid-template-columns:1fr;gap:32px;align-items:start;padding-top:22px}
+    .demo{width:min(100%,340px);justify-self:center;margin-top:4px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <a class="home" href="../index.html">&larr; All tools</a>
+  <main class="slide">
+    <div class="copy">
+      <h1>Mavminimums</h1>
+      <p>The Pixhawk/Mavlink/Mavproxy/Ardupilot Telemetry App provides a simple, real-time overview of the essential information from a Pixhawk flight controller. It is designed to show the most important telemetry at a glance, without the complexity of a full ground-control system.</p>
+      <p>It displays key information including battery level and predicted remaining battery life, armed/disarmed state, altitude, Return-to-Home status, GPS status, and other fundamental flight data. The interface is deliberately simple, providing a quick, clear snapshot of the aircraft’s current state.</p>
+    </div>
+    <div class="demo">
+      <iframe src="demo.html" title="mavminimums live demo"></iframe>
+    </div>
+  </main>
+</div>
+</body>
+</html>
